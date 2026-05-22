@@ -35,6 +35,22 @@ If you don't have a custom design yet, the placeholder files in this template re
 
 ### 4. Set up your Google Sheet
 
+**Easiest — run the bootstrap script:**
+
+```bash
+cd scripts
+pip install -r requirements.txt
+export GOOGLE_OAUTH_CLIENT_SECRET_JSON=$HOME/client_secret.json  # see scripts/README.md for OAuth setup
+python3 create_roster_sheet.py \
+  --title "Your Program Cohort Roster 2026" \
+  --admin admin1@example.com \
+  --admin admin2@example.com
+```
+
+The script creates the sheet with both tabs (`Cohort Roster` + `Audit Trail`), all 16+9 columns, formatting (frozen header, alternating bands, conditional formatting on `status`), and shares it with the tokenomics SA + your admins as Editor. Outputs the URL. **One command, no clicking through Google Sheets UI.** LLM agents helping with setup can run this directly.
+
+**Manual alternative** if you'd rather build the sheet by hand:
+
 Create a fresh Google Sheet with two tabs (`Cohort Roster` + `Audit Trail`) and these exact column headers in row 1:
 
 **`Cohort Roster` tab — row 1:**
@@ -51,7 +67,7 @@ processed_at	name	action	github_commit_sha	profile_url	credential_pdf_url	certif
 
 Optional polish — match what `butterfly-effect-club` does: freeze row 1, bold the header band, add alternating row banding, conditional-format the `status` column (green=processed / yellow=pending / red=failed). All cosmetic — the back-end works without them.
 
-**Then share** the sheet with:
+**Then share** the sheet (either path) with:
 - **`butterfly-effect-club@get-data-io.iam.gserviceaccount.com`** (the tokenomics SA) as **Editor** — this is what allows the central handler to back-fill audit columns
 - Each person who should be able to attest cohort completions, as **Editor**. Sheet editors = trust circle.
 

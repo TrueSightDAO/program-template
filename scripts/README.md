@@ -1,6 +1,40 @@
 # scripts/
 
-Operational scripts for the Butterfly Effect cohort onboarding.
+Operational scripts for spinning up + iterating on a cohort-credentialing program.
+
+## `create_roster_sheet.py` — bootstrap the program's Google Sheet
+
+Run this **once** during setup to create your program's Cohort Roster sheet with the canonical column schema, formatting, and sharing baked in. No manual sheet construction needed.
+
+```bash
+pip install -r requirements.txt
+
+# OAuth setup (one time): download client_secret.json from
+# console.cloud.google.com → APIs & Services → Credentials → Create OAuth client ID
+# (Desktop app type). Save it somewhere local and point an env var at it:
+export GOOGLE_OAUTH_CLIENT_SECRET_JSON=$HOME/client_secret.json
+
+python3 create_roster_sheet.py \
+  --title "Your Program Cohort Roster 2026" \
+  --admin admin1@example.com \
+  --admin admin2@example.com
+```
+
+What it does:
+
+- Creates a fresh Google Sheet with `Cohort Roster` + `Audit Trail` tabs
+- Writes all 16 source/audit column headers (Cohort Roster) + 9 audit headers (Audit Trail) from SCHEMA.md
+- Applies frozen header rows, bold dark-teal header band, alternating row banding, conditional formatting on `status` (green/yellow/red)
+- Shares with the tokenomics SA as Editor (so the central handler can back-fill)
+- Shares with each `--admin` email as Editor (= the trust circle for the program)
+- Prints the new spreadsheet URL on stdout
+
+Auth modes:
+
+- **OAuth (preferred)** — uses your Google account; sheet ends up owned by you. Set `GOOGLE_OAUTH_CLIENT_SECRET_JSON`. Token cached at `~/.config/truesight/create_roster_sheet_token.json` after first run.
+- **Service account** — set `GOOGLE_APPLICATION_CREDENTIALS`. Currently blocked by Google's "service accounts can't create files outside a shared drive" rule — the call returns 403 unless the SA is added as a member of a shared drive and you specify that parent. Most operators will find OAuth simpler.
+
+**For LLM-assisted setup:** an LLM agent that has read access to this repo can read the script, install the deps in the operator's environment, and invoke it after the operator provides their OAuth client secret. No manual sheet creation required.
 
 ## `sync_cohort.py`
 
