@@ -1,0 +1,28 @@
+# Secrets — never commit
+google_credentials.json
+era_lineage_*.pem
+era_lineage_*.key
+*.private.pem
+.env
+.env.local
+
+# Defensive: even though v1 design says no participant private keys persist,
+# guard against accidental commit if a future change introduces a keys/ dir.
+keys/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

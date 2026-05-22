@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "program_slug": "TODO-your-program-slug",
+  "program_display_name": "TODO Your Program",
+  "partner_organization": "TODO Your Partner Org",
+  "admin_console_url": "https://TODO-your-program.truesight.me/",
+  "_routing_note": "Roster sheet URL + admin endpoint live on truesight.me/programs/<slug>/manifest.json. Fetch that manifest at runtime to discover roster_sheet_url and tokenomics_admin_endpoint.",
+  "public_manifest_url": "https://truesight.me/programs/TODO-your-program-slug/manifest.json",
+  "roster_tab": "Cohort Roster",
+  "audit_trail_tab": "Audit Trail",
+  "schema_url": "https://github.com/TrueSightDAO/TODO-your-program-club/blob/main/SCHEMA.md",
+  "config_url": "https://raw.githubusercontent.com/TrueSightDAO/TODO-your-program-club/main/config.json",
+  "cert_template": {
+    "base_url": "https://raw.githubusercontent.com/TrueSightDAO/TODO-your-program-club/main/cert_template/",
+    "cert_config": "cert_config.json",
+    "pdf_template": "cert_template.pdf",
+    "logo": "logo.png",
+    "fonts": ["fonts/YourFont-Regular.ttf"],
+    "_note": "Replace cert_template/cert_template.pdf + logo.png + fonts/ with your program's design. cert_config.json overlay coordinates may need to change too — see lineage-engine cert_overlay convention."
+  },
+  "trust_source": "sheet_editors",
+  "_trust_source_note": "Trust circle = whoever is an editor on the roster sheet. Both the admin panel (auth gate) and the central tokenomics handler (signature verification) resolve via the central tokenomics GAS endpoint's list_sheet_editors&sheet_url=... action. No per-program GAS proxy deployment; no static authorized_attestors[] list.",
+  "lineage_credentials": {
+    "repo": "TrueSightDAO/lineage-credentials",
+    "program_path": "programs/TODO-your-program-slug"
+  },
+  "public_credential_url_template": "https://truesight.me/programs/TODO-your-program-slug/credentials/#{pk_hash}",
+  "edgar_submit_endpoint": "https://edgar.truesight.me/dao/submit_contribution"
+}
